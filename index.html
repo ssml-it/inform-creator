@@ -5,10 +5,37 @@
   </head>
   <body>
     <div>
+      <h2>A room</h2>
       <label>Name:</label>
       <input type="text" ng-model="roomName" placeholder="Enter a room name here">
+      <label>Description:</label>
+      <input type="text" ng-model="roomDescription" placeholder="Enter a room description here">
       <hr>
-      <textarea>{{roomName}} is a room.</textarea>
-    </div>
+      <span ng-show="roomName.length">
+        {{roomName}} is a room.
+        <span ng-show="roomDescription.length">"{{roomDescription}}"</span>
+      </span>
+
+    <h2>A person</h2>
+<label>Name:</label>
+<input type="text" ng-model="personName" placeholder="Enter the name of the person">
+
+<label>Description:</label>
+<input type="text" ng-model="personDescription" placeholder="Enter the description here">
+
+<br />
+<label>Sex:</label>
+<input type="radio" ng-model="personSex" value="male"> Male <input type="radio" ng-model="personSex" value="female"> Female <br/>
+
+<label>Location:</label>
+<input type="text" ng-model="personLocation" placeholder="Enter the location of the person">
+
+<hr>
+<span ng-show="personName.length">
+  {{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in the {{personLocation}}</span>.
+  <span ng-show="personDescription.length">The description is "{{personDescription}}".</span>
+</span>
+
+  </div>
   </body>
 </html>
