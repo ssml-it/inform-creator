@@ -1,41 +1,103 @@
 <!doctype html>
-<html ng-app>
+<html ng-app="my-app">
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.8/angular.min.js"></script>
-  </head>
+</head>
   <body>
     <div>
       <h2>A room</h2>
+
       <label>Name:</label>
       <input type="text" ng-model="roomName" placeholder="Enter a room name here">
       <label>Description:</label>
       <input type="text" ng-model="roomDescription" placeholder="Enter a room description here">
+
       <hr>
-      <span ng-show="roomName.length">
-        {{roomName}} is a room.
-        <span ng-show="roomDescription.length">"{{roomDescription}}"</span>
+
+      <span ng-show="roomName">
+        <pre>{{roomName}} is a room. <span ng-show="roomDescription.length">"{{roomDescription}}"</span>
+        </pre>
       </span>
 
-    <h2>A person</h2>
-<label>Name:</label>
-<input type="text" ng-model="personName" placeholder="Enter the name of the person">
+      <span ng-show="roomName">
+      <h3>{{roomName}}</h3>
+      <span ng-show="roomDescription">
+        <p>{{roomDescription}}</p>
+      </span>
+      <p>> </p>
+      </span>
 
-<label>Description:</label>
-<input type="text" ng-model="personDescription" placeholder="Enter the description here">
+      <h2>A person</h2>
 
-<br />
-<label>Sex:</label>
-<input type="radio" ng-model="personSex" value="male"> Male <input type="radio" ng-model="personSex" value="female"> Female <br/>
+      <label>Name:</label>
+      <input type="text" ng-model="personName" placeholder="Enter the name of the person">
 
-<label>Location:</label>
-<input type="text" ng-model="personLocation" placeholder="Enter the location of the person">
+      <label>Description:</label>
+      <input type="text" ng-model="personDescription" placeholder="Enter the description here"> <br />
 
-<hr>
-<span ng-show="personName.length">
-  {{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in the {{personLocation}}</span>.
-  <span ng-show="personDescription.length">The description is "{{personDescription}}".</span>
-</span>
+      <label>Room description:</label>
+      <input type="text" ng-model="personRoomDescription" placeholder="Enter the room description here">
 
-  </div>
+      <br />
+      <label>Sex:</label>
+      <input type="radio" ng-model="personSex" value="male"> Male <input type="radio" ng-model="personSex" value="female"> Female <br/>
+
+      <label>Location:</label>
+      <input type="text" ng-model="personLocation" placeholder="Enter the location of the person">
+
+      <hr>
+
+      <span ng-show="personName.length">
+      <pre>{{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in {{personLocation}}</span>. <span ng-show="personDescription.length">The description is "{{personDescription}}".</span>
+      </pre>
+      </span>
+
+      <span ng-show="personName">
+      <h3><span ng-show="personLocation">{{personLocation}}</span><span ng-hide="personLocation">Unknown location</span></h3>
+      <span ng-show="personRoomDescription">
+        <p>{{personRoomDescription}}</p>
+      </span>
+      <span ng-hide="personRoomDescription">
+        <p>You can see {{personName}} here.</p>
+      </span>
+
+      <p>> look at {{personName}}<br />
+      <span ng-show="personDescription">{{personDescription}}</span><span ng-hide="personDescription">You see nothing special about {{personName}}.</span></p>
+      </span>
+
+      <h2>An action</h2>
+
+      <label>Action name:</label>
+      <input type="text" ng-model="actionName" placeholder="Enter an action name here">
+      <label>Command:</label>
+      <input type="text" ng-model="actionCommand" placeholder="Enter an internal command name">
+
+      <hr>
+
+      <span ng-show="actionName">
+        <pre>{{actionCommand | capitalize}} is an action applying to nothing. Understand "{{actionName}}" as {{actionCommand}}.
+
+Instead of {{actionCommand}}, say "You {{actionName}}."
+        </pre>
+
+      <h3>Unknown location</h3>
+
+      <p>> {{actionName}}</p>
+
+      </span>
+    </div>
+
+    <script type="text/javascript">
+    // add the filter to your application module
+    angular.module('my-app', ['filters']);
+
+    angular.module('filters', []).
+      filter('capitalize', function() {
+        return function(input, scope) {
+          return input.substring(0,1).toUpperCase()+input.substring(1);
+        }
+      });
+
+    </script>
   </body>
 </html>
