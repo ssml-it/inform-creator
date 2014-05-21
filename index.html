@@ -2,15 +2,28 @@
 <html ng-app="my-app">
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.8/angular.min.js"></script>
-</head>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </head>
   <body>
-    <div>
+    <div class="container">
+
+      <form role="room">
+      <div class="form-group">
       <h2>A room</h2>
 
-      <label>Name:</label>
-      <input type="text" ng-model="roomName" placeholder="Enter a room name here">
-      <label>Description:</label>
-      <input type="text" ng-model="roomDescription" placeholder="Enter a room description here">
+      <div class="form-group">
+        <label for="roomName">Name:</label>
+        <input class="form-control" type="text" ng-model="roomName" placeholder="Enter a room name here">
+      </div>
+      <div class="form-group">
+        <label>Description:</label>
+        <input class="form-control" type="text" ng-model="roomDescription" placeholder="Enter a room description here">
+      </div>
 
       <hr>
 
@@ -27,23 +40,41 @@
       <p>> </p>
       </span>
 
+    </form>
+  </div>
+
+      <form role="person">
+        <div class="form-group">
       <h2>A person</h2>
 
+      <div class="form-group">
       <label>Name:</label>
-      <input type="text" ng-model="personName" placeholder="Enter the name of the person">
+      <input class="form-control" type="text" ng-model="personName" placeholder="Enter the name of the person">
+    </div>
 
+<div class="form-group">
+      <label class="checkbox-inline">
+      <input type="radio" ng-model="personSex" value="male"> Male
+    </label>
+    <label class="radio-inline">
+      <input type="radio" ng-model="personSex" value="female"> Female
+    </label>
+  </div>
+
+<div class="form-group">
       <label>Description:</label>
-      <input type="text" ng-model="personDescription" placeholder="Enter the description here"> <br />
+      <input class="form-control" type="text" ng-model="personDescription" placeholder="Enter the description here">
+    </div>
 
-      <label>Room description:</label>
-      <input type="text" ng-model="personRoomDescription" placeholder="Enter the room description here">
+      <div class="form-group">
+<label>Room description:</label>
+      <input class="form-control" type="text" ng-model="personRoomDescription" placeholder="Enter the room description here">
+    </div>
 
-      <br />
-      <label>Sex:</label>
-      <input type="radio" ng-model="personSex" value="male"> Male <input type="radio" ng-model="personSex" value="female"> Female <br/>
-
-      <label>Location:</label>
-      <input type="text" ng-model="personLocation" placeholder="Enter the location of the person">
+<div class="form-group">
+      <label for="personLocation">Location:</label>
+      <input class="form-control" type="text" ng-model="personLocation" placeholder="Enter the location of the person">
+    </div>
 
       <hr>
 
@@ -65,12 +96,22 @@
       <span ng-show="personDescription">{{personDescription}}</span><span ng-hide="personDescription">You see nothing special about {{personName}}.</span></p>
       </span>
 
+    </form>
+  </div>
+
+      <form role="action">
+        <div class="form-group">
+
       <h2>An action</h2>
 
-      <label>Action name:</label>
-      <input type="text" ng-model="actionName" placeholder="Enter an action name here">
-      <label>Command:</label>
-      <input type="text" ng-model="actionCommand" placeholder="Enter an internal command name">
+      <div class="form-group">
+        <label>Action name:</label>
+      <input class="form-control" type="text" ng-model="actionName" placeholder="Enter an action name here">
+    </div>
+      <div class="form-group">
+<label>Command:</label>
+      <input class="form-control" type="text" ng-model="actionCommand" placeholder="Enter an internal command name">
+    </div>
 
       <hr>
 
@@ -83,9 +124,15 @@ Instead of {{actionCommand}}, say "You {{actionName}}."
       <h3>Unknown location</h3>
 
       <p>> {{actionName}}</p>
+      <p>You {{actionName}}.</p>
 
       </span>
+
+</form>
+</div>
+
     </div>
+
 
     <script type="text/javascript">
     // add the filter to your application module
