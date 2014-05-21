@@ -20,19 +20,19 @@
       <h2>A room</h2>
 
       <div class="form-group">
-        <label for="roomName">Name:</label>
+        <label for="roomName">Name of the room:</label>
         <input class="form-control" type="text" ng-model="roomName" placeholder="Enter a room name here">
       </div>
       <div class="form-group">
         <label>Description:</label>
         <input class="form-control" type="text" ng-model="roomDescription" placeholder="Enter a room description here">
+        <p class="help-block">Text that appears when a player enters a room, for example "Your Great Auntie Vera's garden is a typical English garden with many sights, sounds, and smells. An old fountain is the centre piece of this garden."</p>
       </div>
 
       <hr>
 
       <span ng-show="roomName">
-        <pre>{{roomName}} is a room. <span ng-show="roomDescription.length">"{{roomDescription}}"</span>
-        </pre>
+        <kbd>{{roomName}} is a room. <span ng-show="roomDescription.length">"{{roomDescription}}"</span></kbd>
       </span>
 
       <span ng-show="roomName">
@@ -67,11 +67,13 @@
 <div class="form-group">
       <label>Description:</label>
       <input class="form-control" type="text" ng-model="personDescription" placeholder="Enter the description here">
+      <p class="help-block">Text that appears when the player looks at a person, for example "She is the sister of your grandmother and demands much respect from you."</p>
     </div>
 
       <div class="form-group">
 <label>Room description:</label>
       <input class="form-control" type="text" ng-model="personRoomDescription" placeholder="Enter the room description here">
+      <p class="help-block">Text that appears when the player enters the room, for example "Darcy is standing here with a stern look on his face."</p>
     </div>
 
 <div class="form-group">
@@ -92,6 +94,9 @@
         <p>{{personRoomDescription}}</p>
       </span>
       <span ng-hide="personRoomDescription">
+        <p>An unknown location with an unknown description.</p>
+      </span>
+      <span ng-hide="personRoomDescription">
         <p>You can see {{personName}} here.</p>
       </span>
 
@@ -108,25 +113,25 @@
       <h2>An action</h2>
 
       <div class="form-group">
-        <label>Action name:</label>
-      <input class="form-control" type="text" ng-model="actionName" placeholder="Enter an action name here">
-    </div>
+        <label>Action command:</label>
+        <input class="form-control" type="text" ng-model="actionCommand" placeholder="Enter an action command here">
+        <p class="help-block">What should the player type for this action, e.g. "yawn"</p>
+      </div>
       <div class="form-group">
-<label>Command:</label>
-      <input class="form-control" type="text" ng-model="actionCommand" placeholder="Enter an internal command name">
+<label>Action name:</label>
+      <input class="form-control" type="text" ng-model="actionName" placeholder="Enter an internal command name">
+      <p class="help-block">How should the game call this action, e.g. "yawning"</p>
     </div>
 
       <hr>
 
       <span ng-show="actionName">
-        <pre>{{actionCommand | capitalize}} is an action applying to nothing. Understand "{{actionName}}" as {{actionCommand}}.
-
-Instead of {{actionCommand}}, say "You {{actionName}}."
-        </pre>
+        <p><kbd>{{actionName | capitalize}} is an action applying to nothing. Understand "{{actionCommand}}" as {{actionName}}.</kbd></p>
+        <p><kbd>Instead of {{actionName}}, say "You {{actionCommand}}."</kbd></p>
 
       <h3>Unknown location</h3>
 
-      <p>> {{actionName}}</p>
+      <p>> {{actionCommand}}</p>
       <p>You {{actionName}}.</p>
 
       </span>
