@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <!-- <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> -->
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -32,13 +32,13 @@
       <hr>
 
       <span ng-show="roomName">
-        <kbd>{{roomName}} is a room. <span ng-show="roomDescription.length">"{{roomDescription}}"</span></kbd>
+        <kbd>{{roomName}} is a room. <span ng-show="roomDescription.length">"{{roomDescription | punctuate}}"</span></kbd>
       </span>
 
       <span ng-show="roomName">
       <h3>{{roomName}}</h3>
       <span ng-show="roomDescription">
-        <p>{{roomDescription}}</p>
+        <p>{{roomDescription | punctuate}}</p>
       </span>
       <p>> </p>
       </span>
@@ -84,14 +84,14 @@
       <hr>
 
       <span ng-show="personName.length">
-      <kbd>{{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in {{personLocation}}</span>. <span ng-show="personRoomDescription">"{{personRoomDescription}}".</span> <span ng-show="personDescription.length">The description is "{{personDescription}}".</span>
+    <kbd>{{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in {{personLocation}}</span>. <span ng-hide="personLocation">{{personName}} is here.</span> <span ng-show="personRoomDescription">"{{personRoomDescription | punctuate}}"</span> <span ng-show="personDescription.length">The description is "{{personDescription | punctuate}}"</span>
       </kbd>
       </span>
 
       <span ng-show="personName">
       <h3><span ng-show="personLocation">{{personLocation}}</span><span ng-hide="personLocation">Unknown location</span></h3>
       <span ng-show="personRoomDescription">
-        <p>{{personRoomDescription}}</p>
+        <p>{{personRoomDescription | punctuate}}</p>
       </span>
       <span ng-hide="personRoomDescription">
         <p>An unknown location with an unknown description.</p>
@@ -101,7 +101,7 @@
       </span>
 
       <p>> look at {{personName}}<br />
-      <span ng-show="personDescription">{{personDescription}}</span><span ng-hide="personDescription">You see nothing special about {{personName}}.</span></p>
+      <span ng-show="personDescription">{{personDescription | punctuate}}</span><span ng-hide="personDescription">You see nothing special about {{personName}}.</span></p>
       </span>
 
     </form>
@@ -126,8 +126,8 @@
       <hr>
 
       <span ng-show="actionName">
-        <p><kbd>{{actionName | capitalize}} is an action applying to nothing. Understand "{{actionCommand}}" as {{actionName}}.</kbd></p>
-        <p><kbd>Instead of {{actionName}}, say "You {{actionCommand}}."</kbd></p>
+        <p><kbd>{{actionName | capitalize }} is an action applying to nothing. Understand "{{actionCommand}}" as {{actionName}}.</kbd></p>
+        <p><kbd>Instead of {{actionName }}, say "You {{actionCommand}}."</kbd></p>
 
       <h3>Unknown location</h3>
 
@@ -143,16 +143,23 @@
 
 
     <script type="text/javascript">
-    // add the filter to your application module
-    angular.module('my-app', ['filters']);
+      var app = angular.module('my-app', []);
 
-    angular.module('filters', []).
-      filter('capitalize', function() {
+      app.filter("capitalize", function(){
         return function(input, scope) {
           return input.substring(0,1).toUpperCase()+input.substring(1);
         }
       });
 
+      app.filter("punctuate", function(){
+        return function(input, scope){
+          var punctuation =/.*[.?!]$/;
+          if(!(punctuation.test(input))) {
+            return input.concat(".");
+          }
+          return input;
+        }
+      });
     </script>
   </body>
 </html>
