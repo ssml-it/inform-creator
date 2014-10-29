@@ -44,7 +44,7 @@
             <div class="form-group">
               <label>Description:</label>
               <input class="form-control" type="text" ng-model="roomDescription" placeholder="Enter a room description here">
-              <span class="help-block">Text that appears when a player enters a room, for example <i>"Your Great Auntie Vera's garden is a typical English garden with many sights, sounds, and smells. An old fountain is the centrepiece of this garden."</i></span>
+              <span class="help-block">Text that appears when a player enters a room, for example <em>"Your Great Auntie Vera's garden is a typical English garden with many sights, sounds, and smells. An old fountain is the centrepiece of this garden."</em></span>
             </div>
 
             <span ng-show="roomName">
@@ -91,13 +91,13 @@
             <div class="form-group">
               <label>Description:</label>
               <input class="form-control" type="text" ng-model="personDescription" placeholder="Enter the description here">
-              <p class="help-block">Text that appears when the player looks at a person, for example "She is the sister of your grandmother and demands much respect from you."</p>
+              <span class="help-block">Text that appears when the player looks at a person, for example <em>"She is the sister of your grandmother and demands much respect from you."</em></span>
             </div>
 
             <div class="form-group">
               <label>Room description:</label>
               <input class="form-control" type="text" ng-model="personRoomDescription" placeholder="Enter the room description here">
-              <p class="help-block">Text that appears when the player enters the room, for example "Darcy is standing here with a stern look on his face."</p>
+              <span class="help-block">Text that appears when the player enters the room, for example <em>"Darcy is standing here with a stern look on his face."</em></span>
             </div>
 
             <div class="form-group">
@@ -109,7 +109,7 @@
 
             <span ng-show="personName">
               <div class="well">
-              <h3><span ng-show="personLocation">{{personLocation}}</span><span ng-hide="personLocation">Unknown location</span></h3>
+              <h3><span ng-show="personLocation">{{personLocation}}</span><span ng-hide="personLocation">Default location</span></h3>
               <span ng-show="personRoomDescription">
                 <p>{{personRoomDescription | punctuate}}</p>
               </span>
@@ -120,7 +120,7 @@
                 <p>You can see {{personName}} here.</p>
               </span>
 
-              <p>> look at {{personName}}<br />
+              <p>> look at <span ng-show="personSex == 'male'">him</span><span ng-show="personSex == 'female'">her</span><br />
                 <span ng-show="personDescription">{{personDescription | punctuate}}</span><span ng-hide="personDescription">You see nothing special about {{personName}}.</span></p>
               </div>
             </span>
@@ -134,13 +134,13 @@
             <div class="form-group">
               <label>Action command:</label>
               <input class="form-control" type="text" ng-model="actionCommand" placeholder="Enter an action command here">
-              <p class="help-block">What should the player type for this action, e.g. "yawn"</p>
+              <span class="help-block">What should the player type for this action, for example <em>"yawn"</em></span>
             </div>
 
             <div class="form-group">
     <label>Action name:</label>
               <input class="form-control" type="text" ng-model="actionName" placeholder="Enter an internal command name">
-              <p class="help-block">How should the game call this action, e.g. "yawning"</p>
+              <span class="help-block">How should the game call this action, for example <em>"yawning"</em></span>
             </div>
 
             <hr>
@@ -150,7 +150,7 @@
               <p><kbd>{{actionName | capitalize }} is an action applying to nothing. Understand "{{actionCommand}}" as {{actionName}}.</kbd></p>
               <p><kbd>Instead of {{actionName }}, say "You {{actionCommand}}."</kbd></p>
 
-              <h3>Unknown location</h3>
+              <h3>Default location</h3>
 
               <p>> {{actionCommand}}</p>
               <p>You {{actionCommand}}.</p>
