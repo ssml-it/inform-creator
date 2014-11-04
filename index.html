@@ -129,36 +129,65 @@
 
         </div>
         <div class="tab-pane" id="actions">
-          <form role="action">
 
+          <br />
+
+        <div ng-controller="actionController">
+
+
+          <span ng-show="actionCommand">
+            <span ng-show="noTarget">
+              <p><kbd>{{commanding | capitalize}} is an action applying to nothing. Understand "{{command}}" as {{commanding}}.</kbd></p>
+
+              <p><kbd>Carry out {{commanding}}:<br />&nbsp;&nbsp;&nbsp; say "You {{command}}."</kbd></p>
+            </span>
+
+            <span ng-hide="noTarget">
+                <p><kbd>{{commanding | capitalize}} is an action applying to one thing. Understand "{{command}} [{{target}}]" as {{commanding}}.</kbd></p>
+
+                <p><kbd>Carry out {{commanding}}:<br />&nbsp;&nbsp;&nbsp;
+                      say "You {{command}} [the noun] but nothing happens."</kbd></p>
+            </span>
+
+            <br />
+            <br />
+
+          </span>
+
+          <form role="action">
             <div class="form-group">
               <label>Action command:</label>
-              <input class="form-control" type="text" ng-model="actionCommand" placeholder="Enter an action command here">
-              <span class="help-block">What should the player type for this action, for example <em>"yawn"</em></span>
+              <input class="form-control" type="text" ng-model="actionCommand" ng-change="myCtrl()" placeholder="Enter an action command here"> <span class="help-block">What should the player type for this action, for example <em>"yawn at someone"</em></span>
+
             </div>
+          </form>
 
-            <div class="form-group">
-    <label>Action name:</label>
-              <input class="form-control" type="text" ng-model="actionName" placeholder="Enter an internal command name">
-              <span class="help-block">How should the game call this action, for example <em>"yawning"</em></span>
-            </div>
-
-            <hr>
-
-            <span ng-show="actionName">
+          <span ng-show="actionCommand">
               <div class="well">
-              <p><kbd>{{actionName | capitalize }} is an action applying to nothing. Understand "{{actionCommand}}" as {{actionName}}.</kbd></p>
-              <p><kbd>Instead of {{actionName }}, say "You {{actionCommand}}."</kbd></p>
 
               <h3>Default location</h3>
+              <span ng-show="target">
+                <span ng-if="target == 'someone'">
+                  <p>Mr Darcy is here.</p>
 
-              <p>> {{actionCommand}}</p>
-              <p>You {{actionCommand}}.</p>
+                  <p>> {{command}} Mr Darcy</p>
+                  <p>You try to {{command}} Mr Darcy but not much happens.</p>
+                </span>
+                <span ng-if="target == 'something'">
+                  <p>A chair is here.</p>
+
+                  <p>> {{command}} the chair</p>
+                  <p>You try to {{command}} the chair but not much happens.</p>
+                </span>
+              </span>
+
+              <span ng-hide="target">
+                <p>> {{command}}</p>
+                <p>You try to {{command}} but not much happens.</p>
+              </span>
 
             </div>
             </span>
-
-          </form>
         </div>
 
       </div>
@@ -172,7 +201,7 @@
       app.filter("capitalize", function(){
         return function(input, scope) {
           return input.substring(0,1).toUpperCase()+input.substring(1);
-        }
+        };
       });
 
       app.filter("punctuate", function(){
@@ -182,8 +211,52 @@
             return input.concat(".");
           }
           return input;
-        }
+        };
       });
+
+      app.controller('actionController', ['$scope', function($scope) {
+        $scope.noTarget = true;
+
+        $scope.myCtrl = function () {
+          var input = $scope.actionCommand.split(" ");
+
+          $scope.commanding = input[0] + "ing";
+          $scope.command = input[0];
+
+          var command = /(something|someone)/;
+          if (command.test($scope.actionCommand)) {
+            var position = input.indexOf("something");
+
+            if (position > 0) {
+              $scope.target = "something";
+
+              if (1 < position) {
+                $scope.commanding = $scope.commanding + " " + input.slice(1, position).join(" ");
+                $scope.command = $scope.command + " " + input.slice(1, position).join(" ");
+              }
+            } else {
+              position = input.indexOf("someone");
+
+              if (position > 0) {
+                $scope.target = "someone";
+
+                if (1 < position) {
+                  $scope.commanding = $scope.commanding + " " + input.slice(1, position).join(" ");
+                  $scope.command = $scope.command + " " + input.slice(1, position).join(" ");
+                }
+              }
+            }
+
+            $scope.noTarget = false;
+          } else {
+            $scope.commanding = $scope.commanding + " " + input.slice(1).join(" ");
+            $scope.command = $scope.command + " " + input.slice(1).join(" ");
+
+            $scope.noTarget = true;
+          }
+        };
+      }]);
+
     </script>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
