@@ -139,14 +139,15 @@
             <span ng-show="noTarget">
               <p><kbd>{{commanding | capitalize}} is an action applying to nothing. Understand "{{command}}" as {{commanding}}.</kbd></p>
 
-              <p><kbd>Carry out {{commanding}}:<br />&nbsp;&nbsp;&nbsp; say "You {{command}}."</kbd></p>
+              <p><kbd>Carry out {{commanding}}:</kbd></p>
+              <p><kbd>&nbsp;&nbsp;&nbsp; say "You {{command}}."</kbd></p>
             </span>
 
             <span ng-hide="noTarget">
                 <p><kbd>{{commanding | capitalize}} is an action applying to one thing. Understand "{{command}} [{{target}}]" as {{commanding}}.</kbd></p>
 
-                <p><kbd>Carry out {{commanding}}:<br />&nbsp;&nbsp;&nbsp;
-                      say "You {{command}} [the noun] but nothing happens."</kbd></p>
+                <p><kbd>Carry out {{commanding}}:</kbd></p>
+                <p><kbd>&nbsp;&nbsp;&nbsp;say "You {{command}} [the noun] but nothing happens."</kbd></p>
             </span>
 
             <br />
@@ -251,6 +252,9 @@
           } else {
             $scope.commanding = $scope.commanding + " " + input.slice(1).join(" ");
             $scope.command = $scope.command + " " + input.slice(1).join(" ");
+
+            $scope.commanding = $scope.commanding.trim();
+            $scope.command = $scope.command.trim();
 
             $scope.noTarget = true;
           }
