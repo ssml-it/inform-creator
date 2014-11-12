@@ -63,6 +63,9 @@
 
           <br />
 
+          <span ng-show="personLocation.length">
+            <kbd>{{personLocation}} is a room.</kbd><br /><br />
+          </span>
           <span ng-show="personName.length">
             <kbd>{{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in {{personLocation}}</span>. <span ng-hide="personLocation">{{personName}} is here.</span> <span ng-show="personRoomDescription">"{{personRoomDescription | punctuate}}"</span> <span ng-show="personDescription.length">The description is "{{personDescription | punctuate}}"</span>
             </kbd>
