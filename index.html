@@ -28,7 +28,7 @@
           <br />
 
           <span ng-show="roomName">
-            <kbd>{{roomName}} is a room. <span ng-show="roomDescription.length">"{{roomDescription | punctuate}}"</span></kbd>
+            <kbd>{{roomName}} is a room. <span ng-show="roomDescription.length">"{{roomDescription | clean | punctuate}}"</span></kbd>
 
             <br />
             <br />
@@ -43,13 +43,13 @@
 
             <div class="form-group">
               <label>Description:</label>
-              <input class="form-control" type="text" ng-model="roomDescription" placeholder="Enter a room description here">
+              <textarea class="form-control" rows="3" ng-model="roomDescription" placeholder="Enter a room description here"></textarea>
               <span class="help-block">Text that appears when a player enters a room, for example <em>"Your Great Auntie Vera's garden is a typical English garden with many sights, sounds, and smells. An old fountain is the centrepiece of this garden."</em></span>
             </div>
 
             <span ng-show="roomName">
               <div class="well">
-              <h3>{{roomName}}</h3>
+              <h3>{{roomName | stripArticles}}</h3>
               <span ng-show="roomDescription">
                 <p>{{roomDescription | punctuate}}</p>
               </span>
@@ -67,7 +67,7 @@
             <kbd>{{personLocation}} is a room.</kbd><br /><br />
           </span>
           <span ng-show="personName.length">
-            <kbd>{{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in {{personLocation}}</span>. <span ng-hide="personLocation">{{personName}} is here.</span> <span ng-show="personRoomDescription">"{{personRoomDescription | punctuate}}"</span> <span ng-show="personDescription.length">The description is "{{personDescription | punctuate}}"</span>
+            <kbd>{{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in {{personLocation}}</span>. <span ng-hide="personLocation">{{personName}} is here.</span> <span ng-show="personRoomDescription">"{{personRoomDescription | clean | punctuate}}"</span> <span ng-show="personDescription.length">The description is "{{personDescription | clean | punctuate}}"</span>
             </kbd>
 
             <br />
@@ -93,13 +93,13 @@
 
             <div class="form-group">
               <label>Description:</label>
-              <input class="form-control" type="text" ng-model="personDescription" placeholder="Enter the description here">
+              <textarea class="form-control" rows="3" ng-model="personDescription" placeholder="Enter the description here"></textarea>
               <span class="help-block">Text that appears when the player looks at a person, for example <em>"She is the sister of your grandmother and demands much respect from you."</em></span>
             </div>
 
             <div class="form-group">
               <label>Room description:</label>
-              <input class="form-control" type="text" ng-model="personRoomDescription" placeholder="Enter the room description here">
+              <textarea class="form-control" rows="3" ng-model="personRoomDescription" placeholder="Enter the room description here"></textarea>
               <span class="help-block">Text that appears when the player enters the room, for example <em>"Darcy is standing here with a stern look on his face."</em></span>
             </div>
 
@@ -112,7 +112,7 @@
 
             <span ng-show="personName">
               <div class="well">
-              <h3><span ng-show="personLocation">{{personLocation}}</span><span ng-hide="personLocation">Default location</span></h3>
+              <h3><span ng-show="personLocation">{{personLocation | stripArticles}}</span><span ng-hide="personLocation">Default location</span></h3>
               <span ng-show="personRoomDescription">
                 <p>{{personRoomDescription | punctuate}}</p>
               </span>
@@ -161,7 +161,7 @@
           <form role="action">
             <div class="form-group">
               <label>Action command:</label>
-              <input class="form-control" type="text" ng-model="actionCommand" ng-change="myCtrl()" placeholder="Enter an action command here"> <span class="help-block">What should the player type for this action, for example <em>"yawn at someone"</em></span>
+              <input class="form-control" type="text" ng-model="actionCommand" ng-change="myCtrl()" placeholder="Enter an action command here"> <span class="help-block">What should the player type for this action, for example <em>"yawn at someone"</em> or <em>"steal something"</em>.</span>
 
             </div>
           </form>
@@ -215,6 +215,18 @@
             return input.concat(".");
           }
           return input;
+        };
+      });
+
+      app.filter("clean", function(){
+        return function(input, scope){
+          return input.replace(/"/g, "\'");
+        };
+      });
+
+      app.filter("stripArticles", function(){
+        return function(input, scope){
+          return input.replace(/^(the |a )/i, "");
         };
       });
 
