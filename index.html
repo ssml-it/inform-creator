@@ -17,18 +17,22 @@
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
         <li class="active"><a href="#rooms" role="tab" data-toggle="tab">Rooms</a></li>
+        <li><a href="#objects" role="tab" data-toggle="tab">Objects</a></li>
         <li><a href="#people" role="tab" data-toggle="tab">People</a></li>
         <li><a href="#actions" role="tab" data-toggle="tab">Actions</a></li>
       </ul>
 
       <!-- Tab panes -->
       <div class="tab-content">
+
+        <!-- Rooms -->
+
         <div class="tab-pane active" id="rooms">
 
           <br />
 
           <span ng-show="roomName">
-            <kbd>{{roomName}} is a room. <span ng-show="roomDescription.length">"{{roomDescription | clean | punctuate}}"</span></kbd>
+            <kbd>The {{roomName | stripArticles | capitalize}} is a room. <span ng-show="roomDescription.length">"{{roomDescription | clean | punctuate}}"</span></kbd>
 
             <br />
             <br />
@@ -49,25 +53,147 @@
 
             <span ng-show="roomName">
               <div class="well">
-              <h3>{{roomName | stripArticles}}</h3>
+              <h3>{{roomName | stripArticles | capitalize}}</h3>
               <span ng-show="roomDescription">
                 <p>{{roomDescription | punctuate}}</p>
               </span>
-              <p>> </p>
+              <p><strong>&gt;</strong></p>
               </div>
             </span>
           </form>
         </div>
+
+        <!-- Objects -->
+
+        <div class="tab-pane" id="objects">
+
+          <br />
+
+          <span ng-show="objectLocation.length">
+            <kbd>The {{objectLocation | stripArticles | capitalize}} is a room.</kbd>
+
+            <br />
+            <br />
+          </span>
+
+          <span ng-show="objectName.length">
+            <kbd>{{objectName | capitalize}} is a thing<span ng-show="objectLocation"> in the {{objectLocation | stripArticles | capitalize }}</span>. <span ng-hide="objectLocation">The {{objectName | stripArticles}} is here.</span> <span ng-show="objectEdible == '1'">It is edible.</span> <span ng-show="objectContainer == '1'">It is <span ng-show="objectLocked">a locked</span><span ng-hide="objectLocked">an openable</span> container.</span> <span ng-show="objectRoomDescription">"{{objectRoomDescription | clean | punctuate}}"</span> <span ng-show="objectDescription.length">The description is "{{objectDescription | clean | punctuate}}"</span>
+            </kbd>
+
+            <span ng-show="objectContainer">
+              <br /><br />
+              <p><kbd>A random thing is inside the {{objectName | stripArticles}}.</p>
+            </span>
+
+            <span ng-show="objectLocked">
+              <br /><br />
+              <p><kbd>The bronze key is carried by the player. It unlocks the {{objectName | stripArticles}}.</p>
+            </span>
+
+            <span ng-show="objectEdible == '1'">
+              <br /><br />
+              <p><kbd>After eating the {{objectName | stripArticles}}:<br />
+                &nbsp;&nbsp;&nbsp; say "You wish you had another {{objectName | stripArticles}}."</kbd></p>
+            </span>
+
+            <br />
+            <br />
+          </span>
+
+
+          <form role="object">
+
+            <div class="form-group">
+              <label>Name:</label>
+              <input class="form-control" type="text" ng-model="objectName" placeholder="Enter the name of the object">
+              <span class="help-block">What is this object called, for example <em>"a cake"</em> or <em>"a priceless painting"</em>.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="objectEdible" value="false"> Can the player eat it?
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="objectContainer" value="false"> Can the object contain things?
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="objectLocked" value="false"> Is a key needed to open it?
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label>Description:</label>
+              <textarea class="form-control" rows="3" ng-model="objectDescription" placeholder="Enter the description here"></textarea>
+              <span class="help-block">Text that appears when the player looks at the object, for example <em>"A priceless painting in a simple frame."</em></span>
+            </div>
+
+            <div class="form-group">
+              <label>Room description:</label>
+              <textarea class="form-control" rows="3" ng-model="objectRoomDescription" placeholder="Enter the object room description here"></textarea>
+              <span class="help-block">Text that appears when the player enters the room, for example <em>"A painting domaniates the wall."</em></span>
+            </div>
+
+            <div class="form-group">
+              <label for="objectLocation">Location:</label>
+              <input class="form-control" type="text" ng-model="objectLocation" placeholder="Enter the location of the object">
+            </div>
+
+            <hr>
+
+            <span ng-show="objectName">
+              <div class="well">
+              <h3><span ng-show="objectLocation">{{objectLocation | stripArticles | capitalize}}</span><span ng-hide="objectLocation">Default location</span></h3>
+              <span ng-show="objectRoomDescription">
+                <p>{{objectRoomDescription | punctuate}}</p>
+              </span>
+              <!-- <span ng-hide="objectRoomDescription">
+                <p>An unknown location with an unknown description.</p>
+              </span> -->
+              <span ng-hide="objectRoomDescription">
+                <p>You can see {{objectName}} <span ng-show="objectContainer">(<span ng-show="objectLocked">closed</span><span ng-hide="objectLocked">in which is a random thing</span>)</span> here.</p>
+              </span>
+
+              <p><strong>&gt;look at the {{objectName | stripArticles}}</strong><br />
+                <span ng-hide="objectContainer"><span ng-hide="objectDescription">You see nothing special about the {{objectName | stripArticles}}.</span></span>
+                <span ng-show="objectDescription">{{objectDescription | punctuate}}<br /><br /></span>
+                <span ng-show="objectContainer">
+                  <span ng-hide="objectLocked">In the {{objectName | stripArticles}} is a random thing.</span>
+                  <span ng-show="objectLocked"><span ng-hide="objectDescription">You see nothing special about the {{objectName | stripArticles}}.</span></span>
+                </span>
+              </p>
+
+              <span ng-show="objectContainer"><span ng-show="objectLocked">
+              <p><strong>&gt;unlock the {{objectName | stripArticles}}</strong><br />
+                  (with the bronze key)<br />
+                  You unlock the {{objectName | stripArticles}}.
+              </p>
+
+              <p><strong>&gt;open the {{objectName | stripArticles}}</strong><br />
+                You open the {{objectName | stripArticles}}, revealing a random thing.
+              </p>
+              </span></span>
+
+              </div>
+            </span>
+
+          </form>
+
+        </div>
+
+        <!-- People -->
 
         <div class="tab-pane" id="people">
 
           <br />
 
           <span ng-show="personLocation.length">
-            <kbd>{{personLocation}} is a room.</kbd><br /><br />
+            <kbd>The {{personLocation | stripArticles | capitalize}} is a room.</kbd><br /><br />
           </span>
           <span ng-show="personName.length">
-            <kbd>{{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in {{personLocation}}</span>. <span ng-hide="personLocation">{{personName}} is here.</span> <span ng-show="personRoomDescription">"{{personRoomDescription | clean | punctuate}}"</span> <span ng-show="personDescription.length">The description is "{{personDescription | clean | punctuate}}"</span>
+            <kbd>{{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in the {{personLocation | stripArticles | capitalize }}</span>. <span ng-hide="personLocation">{{personName}} is here.</span> <span ng-show="personRoomDescription">"{{personRoomDescription | clean | punctuate}}"</span> <span ng-show="personDescription.length">The description is "{{personDescription | clean | punctuate}}"</span>
             </kbd>
 
             <br />
@@ -83,7 +209,7 @@
             </div>
 
             <div class="form-group">
-              <label class="checkbox-inline">
+              <label class="radio-inline">
                 <input type="radio" ng-model="personSex" value="male"> Male
               </label>
               <label class="radio-inline">
@@ -112,7 +238,7 @@
 
             <span ng-show="personName">
               <div class="well">
-              <h3><span ng-show="personLocation">{{personLocation | stripArticles}}</span><span ng-hide="personLocation">Default location</span></h3>
+              <h3><span ng-show="personLocation">{{personLocation | stripArticles | capitalize}}</span><span ng-hide="personLocation">Default location</span></h3>
               <span ng-show="personRoomDescription">
                 <p>{{personRoomDescription | punctuate}}</p>
               </span>
@@ -123,7 +249,7 @@
                 <p>You can see {{personName}} here.</p>
               </span>
 
-              <p>> look at <span ng-show="personSex == 'male'">him</span><span ng-show="personSex == 'female'">her</span><br />
+              <p><strong>&gt;look at <span ng-show="personSex == 'male'">him</span><span ng-show="personSex == 'female'">her</span></strong><br />
                 <span ng-show="personDescription">{{personDescription | punctuate}}</span><span ng-hide="personDescription">You see nothing special about {{personName}}.</span></p>
               </div>
             </span>
@@ -131,19 +257,21 @@
           </form>
 
         </div>
+
+        <!-- Actions -->
+
         <div class="tab-pane" id="actions">
 
           <br />
 
         <div ng-controller="actionController">
 
-
           <span ng-show="actionCommand">
             <span ng-show="noTarget">
               <p><kbd>{{commanding | capitalize}} is an action applying to nothing. Understand "{{command}}" as {{commanding}}.</kbd></p>
 
-              <p><kbd>Carry out {{commanding}}:</kbd></p>
-              <p><kbd>&nbsp;&nbsp;&nbsp; say "You {{command}}."</kbd></p>
+              <p><kbd>Carry out {{commanding}}:<br />
+              &nbsp;&nbsp;&nbsp; say "You {{command}}."</kbd></p>
             </span>
 
             <span ng-hide="noTarget">
@@ -174,19 +302,19 @@
                 <span ng-if="target == 'someone'">
                   <p>Mr Darcy is here.</p>
 
-                  <p>> {{command}} Mr Darcy</p>
+                  <p><strong>&gt;{{command}} Mr Darcy</strong></p>
                   <p>You try to {{command}} Mr Darcy but not much happens.</p>
                 </span>
                 <span ng-if="target == 'something'">
                   <p>A chair is here.</p>
 
-                  <p>> {{command}} the chair</p>
+                  <p><strong&gt;{{command}} the chair</strong></p>
                   <p>You try to {{command}} the chair but not much happens.</p>
                 </span>
               </span>
 
               <span ng-hide="target">
-                <p>> {{command}}</p>
+                <p><strong>&gt;{{command}}</strong></p>
                 <p>You try to {{command}} but not much happens.</p>
               </span>
 
@@ -226,7 +354,7 @@
 
       app.filter("stripArticles", function(){
         return function(input, scope){
-          return input.replace(/^(the |a )/i, "");
+          return input.replace(/^(the |a |an )/i, "");
         };
       });
 
