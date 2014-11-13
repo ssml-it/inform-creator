@@ -32,7 +32,8 @@
           <br />
 
           <span ng-show="roomName">
-            <kbd>The {{roomName | stripArticles | capitalize}} is a room. <span ng-show="roomDescription.length">"{{roomDescription | clean | punctuate}}"</span></kbd>
+            <p><kbd>The {{roomName | stripArticles | capitalize}} is a room. <span ng-show="roomDescription.length">"{{roomDescription | clean | punctuate}}"</span></kbd></p>
+            <span ng-show="roomDirection"><span ng-show="otherRoomName.length"><p><kbd>The {{otherRoomName | stripArticles | capitalize }} is {{roomDirection | directions}} the {{roomName | stripArticles | capitalize }}.</kbd></p></span></span>
 
             <br />
             <br />
@@ -51,13 +52,44 @@
               <span class="help-block">Text that appears when a player enters a room, for example <em>"Your Great Auntie Vera's garden is a typical English garden with many sights, sounds, and smells. An old fountain is the centrepiece of this garden."</em></span>
             </div>
 
+            <div class="form-group">
+              <label>Direction:</label>
+              <select class="form-control" ng-model="roomDirection">
+                <option> </option>
+                <option>North</option>
+                <option>South</option>
+                <option>East</option>
+                <option>West</option>
+                <option>Up</option>
+                <option>Down</option>
+                <option>Inside</option>
+                <option>Outside</option>
+              </select>
+
+              <span ng-show="roomDirection">
+                <label for="otherRoomDirection">Name of the other room:</label>
+                <input class="form-control" type="text" ng-model="otherRoomName" placeholder="Enter a room name here">
+              </span>
+            </div>
+
             <span ng-show="roomName">
               <div class="well">
               <h3>{{roomName | stripArticles | capitalize}}</h3>
               <span ng-show="roomDescription">
                 <p>{{roomDescription | punctuate}}</p>
               </span>
-              <p><strong>&gt;</strong></p>
+              <span ng-hide="roomDirection"><span ng-hide="otherRoomName.length"><p><strong>&gt;</strong></p></span></span>
+
+              <span ng-show="roomDirection">
+                <span ng-show="otherRoomName.length"><p><strong>&gt;go {{roomDirection}}</strong></p>
+                <h3>{{otherRoomName | stripArticles | capitalize}}</h3>
+                <p><strong>&gt;</strong></p>
+
+                </span>
+                <span ng-hide="otherRoomName.length">
+                  <p><strong>&gt;</strong></p>
+                </span>
+              </span>
               </div>
             </span>
           </form>
@@ -357,6 +389,32 @@
           return input.replace(/^(the |a |an )/i, "");
         };
       });
+
+      app.filter("directions", function(){
+        return function(input, scope){
+          switch(input) {
+            case "North":
+              return "north of";
+            case "South":
+              return "south of";
+            case "East":
+              return "east of";
+            case "West":
+              return "west of";
+            case "Up":
+              return "above";
+            case "Down":
+              return "down from";
+            case "Inside":
+              return "inside from";
+            case "Outside":
+              return "outside from";
+            default:
+              return "hmm";
+          }
+        };
+      });
+
 
       app.controller('actionController', ['$scope', function($scope) {
         $scope.noTarget = true;
