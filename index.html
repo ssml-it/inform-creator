@@ -32,8 +32,18 @@
           <br />
 
           <span ng-show="roomName">
-            <p><kbd>The {{roomName | stripArticles | uppercase}} is a room. <span ng-show="roomDescription.length">"{{roomDescription | clean | punctuate}}"</span></kbd></p>
-            <span ng-show="roomDirection"><span ng-show="otherRoomName.length"><p><kbd>The {{otherRoomName | stripArticles | uppercase }} is {{roomDirection | directions}} the {{roomName | stripArticles | uppercase }}.</kbd></p></span></span>
+            <p><kbd>The {{roomName | stripArticles | uppercase}} is a room.   "<span ng-show="roomDescription.length">{{roomDescription | clean | punctuate}}</span><span ng-hide="roomDescription.length"><span  ng-show="roomDirection">To the {{roomDirection | uppercase}} is the {{otherRoomName | stripArticles | uppercase }}.</span></span>"</kbd></p>
+            <span ng-show="roomDirection">
+              <span ng-hide="roomLocked"><span ng-show="otherRoomName.length"><p><kbd>The {{otherRoomName | stripArticles | uppercase }} is {{roomDirection | directions}} the {{roomName | stripArticles | uppercase }}.</kbd></p></span></span>
+
+              <span ng-show="roomLocked">
+              <p><kbd>The {{otherRoomName | stripArticles | uppercase }} is a room.</kbd></p>
+              <p><kbd>There is a green key in the {{roomName | stripArticles | uppercase}}. The green key unlocks the painted green door. The description is "This must be the key for the painted green door."</kbd></p>
+              <p><kbd>The painted green door is {{roomDirection | directions}} the {{roomName | stripArticles | uppercase}} and {{roomDirection | oppositeDirections}} the {{otherRoomName | stripArticles | uppercase}}. It is a door. It is lockable and locked. "A painted green door stands in the middle of an old brick wall."</kbd></p>
+              <p><kbd>Instead of examining the locked painted green door, say "The door is nice, but it is locked. Don't you think you should look for a key?"</kbd></p>
+              </span>
+
+            </span>
 
             <br />
           </span>
@@ -53,9 +63,10 @@
               <span class="help-block">Text that appears when a player enters a room, for example <em>"Your Great Auntie Vera's garden is a typical English garden with many sights, sounds, and smells. An old fountain is the centrepiece of this garden."</em></span>
             </div>
 
+            <h3>Another room</h3>
             <div class="form-group">
-              <h3>Another room</h3>
-              <label>Direction:</label>
+
+              <label for="roomDirection">Direction:</label>
               <select class="form-control" ng-model="roomDirection">
                 <option> </option>
                 <option>North</option>
@@ -67,12 +78,20 @@
                 <option>Inside</option>
                 <option>Outside</option>
               </select>
+            </div>
 
               <span ng-show="roomDirection">
+                <div class="form-group"<
                 <label for="otherRoomDirection">Name of the other room:</label>
                 <input class="form-control" type="text" ng-model="otherRoomName" placeholder="Enter a room name here">
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="roomLocked" value="false"> Is there a locked door?
+                </label>
+              </div>
               </span>
-            </div>
           </form>
 
           </span>
@@ -81,14 +100,26 @@
             <span ng-show="roomName">
               <div class="well">
               <h3>{{roomName | stripArticles | uppercase}}</h3>
-              <span ng-show="roomDescription">
-                <p>{{roomDescription | punctuate}}</p>
-              </span>
+              <p><span ng-show="roomDescription.length">{{roomDescription | clean | punctuate}}</span><span ng-hide="roomDescription.length"><span  ng-show="roomDirection">To the {{roomDirection | uppercase}} is the {{otherRoomName | stripArticles | uppercase }}.</span></span></p>
+
               <span ng-hide="roomDirection"><span ng-hide="otherRoomName.length"><p><strong>&gt;</strong></p></span></span>
 
               <span ng-show="roomDirection">
-                <span ng-show="otherRoomName.length"><p><strong>&gt;go {{roomDirection | lowercase}}</strong></p>
+                <span ng-show="otherRoomName.length">
+                  <span ng-show="roomLocked">
+                    <p>A painted green door stands in the middle of an old brick wall.</p>
+
+                    <p>You can also see a green key here</p>
+                  <p><strong>&gt;unlock the door with the green key</strong><br />(first taking the green key)<br />
+You unlock the painted green door.</p>
+</span>
+
+                  <p><strong>&gt;go {{roomDirection | lowercase}}</strong><span ng-show="roomLocked"><br />(first opening the painted green door)</span></p>
+
                 <h3>{{otherRoomName | stripArticles | uppercase}}</h3>
+                <span ng-show="roomLocked">
+                  <p>A painted green door stands in the middle of an old brick wall.</p></span>
+
                 <p><strong>&gt;</strong></p>
 
                 </span>
@@ -450,6 +481,30 @@
         };
       });
 
+      app.filter("oppositeDirections", function(){
+        return function(input, scope){
+          switch(input) {
+            case "North":
+              return "south of";
+            case "South":
+              return "north of";
+            case "East":
+              return "west of";
+            case "West":
+              return "east of";
+            case "Up":
+              return "down from";
+            case "Down":
+              return "up from";
+            case "Inside":
+              return "outside from";
+            case "Outside":
+              return "inside from";
+            default:
+              return "hmm";
+          }
+        };
+      });
 
       app.controller('actionController', ['$scope', function($scope) {
         $scope.noTarget = true;
