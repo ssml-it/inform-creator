@@ -518,7 +518,21 @@ You unlock the painted green door.</p>
         $scope.myCtrl = function () {
           var input = $scope.actionCommand.split(" ");
 
-          $scope.commanding = input[0] + "ing";
+          var makeVerb = function(input) {
+            var stringLength = input.length
+
+            if (input.slice(stringLength-2,stringLength) == 'ie') {
+              return input.slice(0,stringLength - 2) + "ying";
+            }
+
+            if (input.charAt(stringLength - 1) == 'e') {
+              return input.slice(0,stringLength - 1) + "ing";
+            }
+
+            return input + "ing";
+          }
+
+          $scope.commanding = makeVerb(input[0]);
           $scope.command = input[0];
 
           var command = /(something|someone)/;
