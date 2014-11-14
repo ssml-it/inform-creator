@@ -39,8 +39,10 @@
             <br />
           </span>
 
-          <form role="room">
+            <hr />
 
+            <span class="col-md-6">
+            <form role="room">
             <div class="form-group">
               <label for="roomName">Name of the room:</label>
               <input class="form-control" type="text" ng-model="roomName" placeholder="Enter a room name here">
@@ -53,6 +55,7 @@
             </div>
 
             <div class="form-group">
+              <h3>Another room</h3>
               <label>Direction:</label>
               <select class="form-control" ng-model="roomDirection">
                 <option> </option>
@@ -71,7 +74,11 @@
                 <input class="form-control" type="text" ng-model="otherRoomName" placeholder="Enter a room name here">
               </span>
             </div>
+          </form>
 
+          </span>
+
+          <span class="col-md-6">
             <span ng-show="roomName">
               <div class="well">
               <h3>{{roomName | stripArticles | uppercase}}</h3>
@@ -92,7 +99,7 @@
               </span>
               </div>
             </span>
-          </form>
+          </span>
         </div>
 
         <!-- Objects -->
@@ -132,8 +139,10 @@
             <br />
           </span>
 
+          <hr />
 
-          <form role="object">
+          <span class="col-md-6">
+            <form role="object">
 
             <div class="form-group">
               <label>Name:</label>
@@ -172,8 +181,10 @@
               <label for="objectLocation">Location:</label>
               <input class="form-control" type="text" ng-model="objectLocation" placeholder="Enter the location of the object">
             </div>
+          </form>
+        </span>
 
-            <hr>
+            <span class="col-md-6">
 
             <span ng-show="objectName">
               <div class="well">
@@ -211,7 +222,7 @@
               </div>
             </span>
 
-          </form>
+          </span>
 
         </div>
 
@@ -232,6 +243,9 @@
             <br />
           </span>
 
+          <hr />
+
+          <span class="col-md-6">
 
           <form role="person">
 
@@ -266,7 +280,11 @@
               <input class="form-control" type="text" ng-model="personLocation" placeholder="Enter the location of the person">
             </div>
 
-            <hr>
+          </form>
+        </span>
+
+
+          <span class="col-md-6">
 
             <span ng-show="personName">
               <div class="well">
@@ -286,7 +304,7 @@
               </div>
             </span>
 
-          </form>
+          </span>
 
         </div>
 
@@ -318,6 +336,10 @@
 
           </span>
 
+          <hr />
+
+          <span class="col-md-6">
+
           <form role="action">
             <div class="form-group">
               <label>Action command:</label>
@@ -325,6 +347,9 @@
 
             </div>
           </form>
+        </span>
+
+          <span class="col-md-6">
 
           <span ng-show="actionCommand">
               <div class="well">
@@ -352,6 +377,7 @@
 
             </div>
             </span>
+          </span>
         </div>
 
       </div>
