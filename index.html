@@ -36,7 +36,6 @@
             <span ng-show="roomDirection"><span ng-show="otherRoomName.length"><p><kbd>The {{otherRoomName | stripArticles | uppercase }} is {{roomDirection | directions}} the {{roomName | stripArticles | uppercase }}.</kbd></p></span></span>
 
             <br />
-            <br />
           </span>
 
             <hr />
@@ -109,33 +108,28 @@
           <br />
 
           <span ng-show="objectLocation.length">
-            <kbd>The {{objectLocation | stripArticles | uppercase}} is a room.</kbd>
-
-            <br />
-            <br />
+            <p><kbd>The {{objectLocation | stripArticles | uppercase}} is a room.</kbd></p>
           </span>
 
           <span ng-show="objectName.length">
+            <p>
             <kbd>{{objectName | uppercase}} is a thing<span ng-show="objectLocation"> in the {{objectLocation | stripArticles | uppercase }}</span>. <span ng-hide="objectLocation">The {{objectName | stripArticles}} is here.</span> <span ng-show="objectEdible == '1'">It is edible.</span> <span ng-show="objectContainer == '1'">It is <span ng-show="objectLocked">a locked</span><span ng-hide="objectLocked">an openable</span> container.</span> <span ng-show="objectRoomDescription">"{{objectRoomDescription | clean | punctuate}}"</span> <span ng-show="objectDescription.length">The description is "{{objectDescription | clean | punctuate}}"</span>
             </kbd>
+            </p>
 
             <span ng-show="objectContainer">
-              <br /><br />
-              <p><kbd>A random thing is inside the {{objectName | stripArticles}}.</p>
+              <p><kbd>A random thing is inside the {{objectName | stripArticles}}.</kbd></p>
             </span>
 
             <span ng-show="objectLocked">
-              <br /><br />
-              <p><kbd>The bronze key is carried by the player. It unlocks the {{objectName | stripArticles}}.</p>
+              <p><kbd>The bronze key is carried by the player. It unlocks the {{objectName | stripArticles}}.</kbd></p>
             </span>
 
-            <span ng-show="objectEdible == '1'">
-              <br /><br />
+            <span ng-show="objectEdible">
               <p><kbd>After eating the {{objectName | stripArticles}}:<br />
                 &nbsp;&nbsp;&nbsp; say "You wish you had another {{objectName | stripArticles}}."</kbd></p>
             </span>
 
-            <br />
             <br />
           </span>
 
@@ -158,11 +152,13 @@
 
             <div class="form-group">
               <label class="checkbox-inline">
-                <input type="checkbox" ng-model="objectContainer" value="false"> Can the object contain things?
+                <input type="checkbox" ng-model="objectContainer" value="false"> Can it contain other things?
               </label>
+              <span ng-show="objectContainer">
               <label class="checkbox-inline">
                 <input type="checkbox" ng-model="objectLocked" value="false"> Is a key needed to open it?
               </label>
+              </span>
             </div>
 
             <div class="form-group">
@@ -218,6 +214,13 @@
                 You open the {{objectName | stripArticles}}, revealing a random thing.
               </p>
               </span></span>
+
+              <span ng-show="objectEdible">
+              <p><strong>&gt;eat the {{objectName | stripArticles}}</strong><br />
+                (first taking the cake)<br />
+                You wish you had another {{objectName | stripArticles }}.
+              </p>
+              </span>
 
               </div>
             </span>
