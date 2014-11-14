@@ -32,8 +32,8 @@
           <br />
 
           <span ng-show="roomName">
-            <p><kbd>The {{roomName | stripArticles | capitalize}} is a room. <span ng-show="roomDescription.length">"{{roomDescription | clean | punctuate}}"</span></kbd></p>
-            <span ng-show="roomDirection"><span ng-show="otherRoomName.length"><p><kbd>The {{otherRoomName | stripArticles | capitalize }} is {{roomDirection | directions}} the {{roomName | stripArticles | capitalize }}.</kbd></p></span></span>
+            <p><kbd>The {{roomName | stripArticles | uppercase}} is a room. <span ng-show="roomDescription.length">"{{roomDescription | clean | punctuate}}"</span></kbd></p>
+            <span ng-show="roomDirection"><span ng-show="otherRoomName.length"><p><kbd>The {{otherRoomName | stripArticles | uppercase }} is {{roomDirection | directions}} the {{roomName | stripArticles | uppercase }}.</kbd></p></span></span>
 
             <br />
             <br />
@@ -74,15 +74,15 @@
 
             <span ng-show="roomName">
               <div class="well">
-              <h3>{{roomName | stripArticles | capitalize}}</h3>
+              <h3>{{roomName | stripArticles | uppercase}}</h3>
               <span ng-show="roomDescription">
                 <p>{{roomDescription | punctuate}}</p>
               </span>
               <span ng-hide="roomDirection"><span ng-hide="otherRoomName.length"><p><strong>&gt;</strong></p></span></span>
 
               <span ng-show="roomDirection">
-                <span ng-show="otherRoomName.length"><p><strong>&gt;go {{roomDirection}}</strong></p>
-                <h3>{{otherRoomName | stripArticles | capitalize}}</h3>
+                <span ng-show="otherRoomName.length"><p><strong>&gt;go {{roomDirection | lowercase}}</strong></p>
+                <h3>{{otherRoomName | stripArticles | uppercase}}</h3>
                 <p><strong>&gt;</strong></p>
 
                 </span>
@@ -102,14 +102,14 @@
           <br />
 
           <span ng-show="objectLocation.length">
-            <kbd>The {{objectLocation | stripArticles | capitalize}} is a room.</kbd>
+            <kbd>The {{objectLocation | stripArticles | uppercase}} is a room.</kbd>
 
             <br />
             <br />
           </span>
 
           <span ng-show="objectName.length">
-            <kbd>{{objectName | capitalize}} is a thing<span ng-show="objectLocation"> in the {{objectLocation | stripArticles | capitalize }}</span>. <span ng-hide="objectLocation">The {{objectName | stripArticles}} is here.</span> <span ng-show="objectEdible == '1'">It is edible.</span> <span ng-show="objectContainer == '1'">It is <span ng-show="objectLocked">a locked</span><span ng-hide="objectLocked">an openable</span> container.</span> <span ng-show="objectRoomDescription">"{{objectRoomDescription | clean | punctuate}}"</span> <span ng-show="objectDescription.length">The description is "{{objectDescription | clean | punctuate}}"</span>
+            <kbd>{{objectName | uppercase}} is a thing<span ng-show="objectLocation"> in the {{objectLocation | stripArticles | uppercase }}</span>. <span ng-hide="objectLocation">The {{objectName | stripArticles}} is here.</span> <span ng-show="objectEdible == '1'">It is edible.</span> <span ng-show="objectContainer == '1'">It is <span ng-show="objectLocked">a locked</span><span ng-hide="objectLocked">an openable</span> container.</span> <span ng-show="objectRoomDescription">"{{objectRoomDescription | clean | punctuate}}"</span> <span ng-show="objectDescription.length">The description is "{{objectDescription | clean | punctuate}}"</span>
             </kbd>
 
             <span ng-show="objectContainer">
@@ -177,7 +177,7 @@
 
             <span ng-show="objectName">
               <div class="well">
-              <h3><span ng-show="objectLocation">{{objectLocation | stripArticles | capitalize}}</span><span ng-hide="objectLocation">Default location</span></h3>
+              <h3><span ng-show="objectLocation">{{objectLocation | stripArticles | uppercase}}</span><span ng-hide="objectLocation">Default location</span></h3>
               <span ng-show="objectRoomDescription">
                 <p>{{objectRoomDescription | punctuate}}</p>
               </span>
@@ -222,10 +222,10 @@
           <br />
 
           <span ng-show="personLocation.length">
-            <kbd>The {{personLocation | stripArticles | capitalize}} is a room.</kbd><br /><br />
+            <kbd>The {{personLocation | stripArticles | uppercase}} is a room.</kbd><br /><br />
           </span>
           <span ng-show="personName.length">
-            <kbd>{{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in the {{personLocation | stripArticles | capitalize }}</span>. <span ng-hide="personLocation">{{personName}} is here.</span> <span ng-show="personRoomDescription">"{{personRoomDescription | clean | punctuate}}"</span> <span ng-show="personDescription.length">The description is "{{personDescription | clean | punctuate}}"</span>
+            <kbd>{{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in the {{personLocation | stripArticles | uppercase }}</span>. <span ng-hide="personLocation">{{personName}} is here.</span> <span ng-show="personRoomDescription">"{{personRoomDescription | clean | punctuate}}"</span> <span ng-show="personDescription.length">The description is "{{personDescription | clean | punctuate}}"</span>
             </kbd>
 
             <br />
@@ -270,7 +270,7 @@
 
             <span ng-show="personName">
               <div class="well">
-              <h3><span ng-show="personLocation">{{personLocation | stripArticles | capitalize}}</span><span ng-hide="personLocation">Default location</span></h3>
+              <h3><span ng-show="personLocation">{{personLocation | stripArticles | uppercase}}</span><span ng-hide="personLocation">Default location</span></h3>
               <span ng-show="personRoomDescription">
                 <p>{{personRoomDescription | punctuate}}</p>
               </span>
@@ -300,14 +300,14 @@
 
           <span ng-show="actionCommand">
             <span ng-show="noTarget">
-              <p><kbd>{{commanding | capitalize}} is an action applying to nothing. Understand "{{command}}" as {{commanding}}.</kbd></p>
+              <p><kbd>{{commanding | uppercase}} is an action applying to nothing. Understand "{{command}}" as {{commanding}}.</kbd></p>
 
               <p><kbd>Carry out {{commanding}}:<br />
               &nbsp;&nbsp;&nbsp; say "You {{command}}."</kbd></p>
             </span>
 
             <span ng-hide="noTarget">
-                <p><kbd>{{commanding | capitalize}} is an action applying to one thing. Understand "{{command}} [{{target}}]" as {{commanding}}.</kbd></p>
+                <p><kbd>{{commanding | uppercase}} is an action applying to one thing. Understand "{{command}} [{{target}}]" as {{commanding}}.</kbd></p>
 
                 <p><kbd>Carry out {{commanding}}:</kbd></p>
                 <p><kbd>&nbsp;&nbsp;&nbsp;say "You {{command}} [the noun] but nothing happens."</kbd></p>
@@ -362,9 +362,15 @@
     <script type="text/javascript">
       var app = angular.module('my-app', []);
 
-      app.filter("capitalize", function(){
+      app.filter("uppercase", function(){
         return function(input, scope) {
           return input.substring(0,1).toUpperCase()+input.substring(1);
+        };
+      });
+
+      app.filter("lowercase", function(){
+        return function(input, scope) {
+          return input.substring(0,1).toLowerCase()+input.substring(1);
         };
       });
 
