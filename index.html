@@ -144,7 +144,7 @@ You unlock the painted green door.</p>
 
           <span ng-show="objectName.length">
             <p>
-            <kbd>{{objectName | uppercase}} is a thing<span ng-show="objectLocation"> in the {{objectLocation | stripArticles | uppercase }}</span>. <span ng-hide="objectLocation">The {{objectName | stripArticles}} is here.</span> <span ng-show="objectEdible == '1'">It is edible.</span> <span ng-show="objectContainer == '1'">It is <span ng-show="objectLocked">a locked</span><span ng-hide="objectLocked">an openable</span> container.</span> <span ng-show="objectRoomDescription">"{{objectRoomDescription | clean | punctuate}}"</span> <span ng-show="objectDescription.length">The description is "{{objectDescription | clean | punctuate}}"</span>
+            <kbd>{{objectName | uppercase}} is a thing<span ng-show="objectLocation"> in the {{objectLocation | stripArticles | uppercase }}</span>. <span ng-hide="objectLocation">The {{objectName | stripArticles}} is here.</span> <span ng-show="objectScenery">It is scenery.</span> <span ng-show="objectEdible">It is edible.</span> <span ng-show="objectContainer">It is <span ng-show="objectLocked">a locked</span><span ng-hide="objectLocked">an openable</span> container.</span> <span ng-show="objectRoomDescription"><span ng-hide="objectScenery">"{{objectRoomDescription | clean | punctuate}}"</span> <span ng-show="objectDescription.length">The description is "{{objectDescription | clean | punctuate}}"</span></span>
             </kbd>
             </p>
 
@@ -173,6 +173,13 @@ You unlock the painted green door.</p>
               <label>Name:</label>
               <input class="form-control" type="text" ng-model="objectName" placeholder="Enter the name of the object">
               <span class="help-block">What is this object called, for example <em>"a cake"</em> or <em>"a priceless painting"</em>.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="objectScenery" value="false"> Is the object scenery?
+              </label>
+              <span class="help-block">If the object is part of scenery it cannot be taken by the player and the player won't be told that it exists. So make sure to mention it when you describe the room.</span>
             </div>
 
             <div class="form-group">
@@ -216,15 +223,15 @@ You unlock the painted green door.</p>
             <span ng-show="objectName">
               <div class="well">
               <h3><span ng-show="objectLocation">{{objectLocation | stripArticles | uppercase}}</span><span ng-hide="objectLocation">Default location</span></h3>
-              <span ng-show="objectRoomDescription">
+              <span ng-show="objectRoomDescription"><span ng-hide="objectScenery">
                 <p>{{objectRoomDescription | punctuate}}</p>
-              </span>
+              </span></span>
               <!-- <span ng-hide="objectRoomDescription">
                 <p>An unknown location with an unknown description.</p>
               </span> -->
-              <span ng-hide="objectRoomDescription">
+              <span ng-hide="objectRoomDescription"><span ng-hide="objectScenery">
                 <p>You can see {{objectName}} <span ng-show="objectContainer">(<span ng-show="objectLocked">closed</span><span ng-hide="objectLocked">in which is a random thing</span>)</span> here.</p>
-              </span>
+              </span></span>
 
               <p><strong>&gt;look at the {{objectName | stripArticles}}</strong><br />
                 <span ng-hide="objectContainer"><span ng-hide="objectDescription">You see nothing special about the {{objectName | stripArticles}}.</span></span>
