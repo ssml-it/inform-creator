@@ -144,7 +144,18 @@ You unlock the painted green door.</p>
 
           <span ng-show="objectName.length">
             <p>
-            <kbd>{{objectName | uppercase}} is a thing<span ng-show="objectLocation"> in the {{objectLocation | stripArticles | uppercase }}</span>. <span ng-hide="objectLocation">The {{objectName | stripArticles}} is here.</span> <span ng-show="objectScenery">It is scenery.</span> <span ng-show="objectEdible">It is edible.</span> <span ng-show="objectContainer">It is <span ng-show="objectLocked">a locked</span><span ng-hide="objectLocked">an openable</span> container.</span> <span ng-show="objectRoomDescription"><span ng-hide="objectScenery">"{{objectRoomDescription | clean | punctuate}}"</span> <span ng-show="objectDescription.length">The description is "{{objectDescription | clean | punctuate}}"</span></span>
+            <kbd>{{objectName | uppercase}} is a thing<span ng-show="objectLocation"> in the {{objectLocation | stripArticles | uppercase }}</span>.
+              <span ng-hide="objectLocation">The {{objectName | stripArticles}} is here.</span>
+              <span ng-show="objectScenery">It is scenery.</span>
+              <span ng-show="objectEdible">It is edible.</span>
+              <span ng-show="objectContainer">It is
+                <span ng-show="objectLocked">a locked</span>
+                <span ng-hide="objectLocked">an openable</span> container.
+                <span ng-show="objectClosed"> It is closed.</span>
+                <span ng-hide="objectClosed"> It is open.</span>
+              </span>
+              <span ng-show="objectRoomDescription"><span ng-hide="objectScenery">"{{objectRoomDescription | clean | punctuate}}"</span> </span>
+              <span ng-show="objectDescription.length">The description is "{{objectDescription | clean | punctuate}}"</span>
             </kbd>
             </p>
 
@@ -193,6 +204,10 @@ You unlock the painted green door.</p>
                 <input type="checkbox" ng-model="objectContainer" value="false"> Can it contain other things?
               </label>
               <span ng-show="objectContainer">
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="objectClosed" value="false"> Is it closed?
+                </label>
+
               <label class="checkbox-inline">
                 <input type="checkbox" ng-model="objectLocked" value="false"> Is a key needed to open it?
               </label>
@@ -230,7 +245,7 @@ You unlock the painted green door.</p>
                 <p>An unknown location with an unknown description.</p>
               </span> -->
               <span ng-hide="objectRoomDescription"><span ng-hide="objectScenery">
-                <p>You can see {{objectName}} <span ng-show="objectContainer">(<span ng-show="objectLocked">closed</span><span ng-hide="objectLocked">in which is a random thing</span>)</span> here.</p>
+                <p>You can see {{objectName}} <span ng-show="objectContainer">(<span ng-show="objectClosed">closed</span><span ng-hide="objectClosed">in which is a random thing</span>)</span> here.</p>
               </span></span>
 
               <p><strong>&gt;look at the {{objectName | stripArticles}}</strong><br />
