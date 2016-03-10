@@ -270,7 +270,7 @@ You unlock the painted green door.</p>
 
               <span ng-show="objectEdible">
               <p><strong>&gt;eat the {{objectName | stripArticles}}</strong><br />
-                (first taking the cake)<br />
+                (first taking the {{objectName}})<br />
                 You wish you had another {{objectName | stripArticles }}.
               </p>
               </span>
@@ -292,7 +292,7 @@ You unlock the painted green door.</p>
             <kbd>The {{personLocation | stripArticles | uppercase}} is a room.</kbd><br /><br />
           </span>
           <span ng-show="personName.length">
-            <kbd>{{personName}} is a <span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in the {{personLocation | stripArticles | uppercase }}</span>. <span ng-hide="personLocation">{{personName}} is here.</span> <span ng-show="personRoomDescription">"{{personRoomDescription | clean | punctuate}}"</span> <span ng-show="personDescription.length">The description is "{{personDescription | clean | punctuate}}"</span>
+            <kbd>{{personName}} is a <span ng-show="personSex === undefined">person</span><span ng-show="personSex == 'male'">man</span><span ng-show="personSex == 'female'">woman</span><span ng-show="personLocation"> in the {{personLocation | stripArticles | uppercase }}</span>. <span ng-hide="personLocation">{{personName}} is here.</span> <span ng-show="personRoomDescription">"{{personRoomDescription | clean | punctuate}}"</span> <span ng-show="personDescription.length">The description is "{{personDescription | clean | punctuate}}"</span>
             </kbd>
 
             <br />
