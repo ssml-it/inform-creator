@@ -376,14 +376,14 @@ You unlock the painted green door.</p>
             <span ng-show="noTarget">
               <p><kbd>{{commanding | uppercase}} is an action applying to nothing. Understand "{{command}}" as {{commanding}}.</kbd></p>
 
-              <p><kbd>Carry out {{commanding}}:<br />
+              <p><kbd>Instead of {{commanding}}:<br />
               &nbsp;&nbsp;&nbsp; say "You {{command}}."</kbd></p>
             </span>
 
             <span ng-hide="noTarget">
                 <p><kbd>{{commanding | uppercase}} is an action applying to one thing. Understand "{{command}} [{{target}}]" as {{commanding}}.</kbd></p>
 
-                <p><kbd>Carry out {{commanding}}:<br />
+                <p><kbd>Instead of {{commanding}}:<br />
                 &nbsp;&nbsp;&nbsp;say "You try to {{command}} [the noun] but not much happens."</kbd></p>
             </span>
 
