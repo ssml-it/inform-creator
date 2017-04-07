@@ -13,3 +13,4 @@ In this version you can:
 - create objects that can be eaten, can contain things, and that can be locked
 - create people
 - create actions simple actions with one noun
+- talk to people and ask about topics and objects
