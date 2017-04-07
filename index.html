@@ -20,6 +20,7 @@
         <li><a href="#objects" role="tab" data-toggle="tab">Objects</a></li>
         <li><a href="#people" role="tab" data-toggle="tab">People</a></li>
         <li><a href="#actions" role="tab" data-toggle="tab">Actions</a></li>
+        <li><a href="#talking" role="tab" data-toggle="tab">Talking</a></li>
       </ul>
 
       <!-- Tab panes -->
@@ -436,6 +437,91 @@ You unlock the painted green door.</p>
         </div> <!-- End of ng-controller -->
 
       </div> <!-- End of Actions pane -->
+
+      <!-- Talking -->
+
+      <div class="tab-pane" id="talking">
+
+        <br />
+
+        <span ng-show="personName.length">
+          <kbd>{{personName}} is a person. {{personName}} is here.</kbd>
+
+          <span ng-show="talkTopic.length">
+            <br />
+            <br />
+            <kbd>Instead of asking {{personName}} about "{{talkTopic}}", say "{{personName}} looks at you and winks."</kbd>
+          </span>
+
+          <span ng-show="talkObject.length">
+            <br />
+            <br />
+
+            <kbd>A {{talkObject | stripArticles}} is here.</kbd><br /><br />
+
+            <kbd>Understand "ask [someone] about [something]" as interrogating it about. Interrogating it about is an action applying to two visible things.</kbd><br /> <br />
+
+            <kbd>Instead of interrogating {{personName}} about the {{talkObject | stripArticles}}, say "'I might like that {{talkObject | stripArticles}}.'"</kbd>
+          </span>
+
+
+          <br />
+          <br />
+        </span>
+
+        <hr />
+
+        <span class="col-md-6">
+
+        <form role="talking">
+
+          <div class="form-group">
+            <label>Name:</label>
+            <input class="form-control" type="text" ng-model="personName" placeholder="Enter the name of the person">
+          </div>
+
+          <div class="form-group">
+            <label>Topic:</label>
+            <input class="form-control" type="text" ng-model="talkTopic" placeholder="Enter the text here">
+            <span class="help-block">What topic you want the player to ask about, for example <em>"the exam"</em></span>
+          </div>
+
+          <div class="form-group">
+            <label>Object:</label>
+            <input class="form-control" type="text" ng-model="talkObject" placeholder="Enter the text here">
+            <span class="help-block">What physical object do you want the player to ask about, for example <em>"the donut"</em></span>
+          </div>
+
+        </form>
+      </span>
+
+
+        <span class="col-md-6">
+
+          <span ng-show="personName">
+            <div class="well">
+            <h3>Example Location</h3>
+            <p>You can see {{personName}} <span ng-show="talkObject"> and a {{talkObject || stripArticles}}</span> here.</p>
+
+            <span ng-show="talkTopic">
+              <p><strong>&gt;ask {{personName}} about {{talkTopic}}</strong><br />
+              <span ng-show="personDescription">{{personDescription | punctuate}}</span><span ng-hide="personDescription">{{personName}} looks at you and winks.</span></p>
+
+              <p><strong>&gt;ask {{personName}} about something else other than {{talkTopic}}</strong><br />
+                There is no reply.</p>
+              </span>
+
+              <span ng-show="talkObject">
+              <p><strong>&gt;ask {{personName}} about the {{talkObject | stripArticles}}</strong><br />
+                "I might like that {{talkObject | stripArticles}}."</p>
+              </span>
+
+            </div>
+          </span>
+
+        </span>
+
+      </div> <!-- End of Talking pane -->
 
     </div> <!-- End of tabs -->
 
