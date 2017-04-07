@@ -501,7 +501,7 @@ You unlock the painted green door.</p>
           <span ng-show="personName">
             <div class="well">
             <h3>Example Location</h3>
-            <p>You can see {{personName}} <span ng-show="talkObject"> and a {{talkObject || stripArticles}}</span> here.</p>
+            <p>You can see {{personName}} <span ng-show="talkObject"> and a {{talkObject | stripArticles}}</span> here.</p>
 
             <span ng-show="talkTopic">
               <p><strong>&gt;ask {{personName}} about {{talkTopic}}</strong><br />
